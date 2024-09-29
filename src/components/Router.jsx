@@ -1,7 +1,7 @@
 import { locationSignal } from './BrowserRouter';
 import { match } from 'path-to-regexp';
 import { toChildArray } from 'preact';
-import Route from './Route';
+import { ParamContext } from '../utils/utils';
 
 const Router = ({ routes, children, defaultPage: DefaultPage }) => {
 	const childrenRoutes = toChildArray(children).map(({ props }) => {
@@ -16,10 +16,14 @@ const Router = ({ routes, children, defaultPage: DefaultPage }) => {
 	if (routes) allRoutes = [].concat(routes);
 	allRoutes = allRoutes.concat(childrenRoutes);
 
+	let params;
+
 	const componentToRender = allRoutes.find((route) => {
 		if (route.path === locationSignal.value) return true;
 		const check = match(route.path);
-		if (!check(locationSignal)) return false;
+		const checkResult = check(locationSignal.value);
+		if (!checkResult) return false;
+		params = checkResult.params;
 		return true;
 	});
 
@@ -27,14 +31,14 @@ const Router = ({ routes, children, defaultPage: DefaultPage }) => {
 		return <>{DefaultPage && <DefaultPage />}</>;
 	}
 
+	const ActualComponent = componentToRender.component;
+
 	return (
 		<>
-			<Route
-				path={componentToRender.path}
-				component={componentToRender.component}
-			>
+			<ParamContext.Provider value={{ params }}>
+				{ActualComponent && <ActualComponent />}
 				{componentToRender.children}
-			</Route>
+			</ParamContext.Provider>
 		</>
 	);
 };

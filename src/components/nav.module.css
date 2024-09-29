@@ -1,0 +1,7 @@
+.link {
+	color: red;
+}
+
+.link[aria-current="true"] {
+	color: yellow;
+}
