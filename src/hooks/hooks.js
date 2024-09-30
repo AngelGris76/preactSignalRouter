@@ -8,8 +8,7 @@ import { EVENT, ParamContext } from '../utils/utils';
 
 /**
  *
- * @returns {[{value:String},(value:String)=>void]}
- * [searchParam object, function to change searchParam]
+ * @type {import("./preact-signal-router.d.ts").useSearchParams}
  */
 export const useSearchParams = () => {
 	const setSearchParams = (param) => {

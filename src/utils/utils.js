@@ -7,7 +7,7 @@ export const EVENT = {
 
 /**
  *
- * @param {URL} to
+ * @type {import("./preact-signal-router.d.ts").navigate}
  */
 export const navigate = (to) => {
 	window.history.pushState({}, '', to);
