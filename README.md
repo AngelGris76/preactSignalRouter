@@ -26,8 +26,8 @@ This component internally get an useEffect to actualize location and serachParam
 
 ##### \<Router /> component
 
-You can use this as a conditional router. Passing routes as a prop or children of Route.
-Also can pass dafaultPage prop with the componente to rendered when no match path occurs
+This component only render the first matching route. Passing routes as a prop or children of Route.
+Also can pass dafaultPage prop with the component to be rendered when no match path occurs
 
     import HomePage from './HomePage.jsx'
     import HomePage from './AboutPage.jsx'
@@ -57,7 +57,7 @@ The Route component render the component in its component prop and children when
     <Route path='/' component={HomePage}>
     ...
 
-dinamyc path is supported to
+dinamyc path is supported too
 
      ...
      <Rotue path='/some/:id' component={...}>

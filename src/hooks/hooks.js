@@ -10,7 +10,7 @@ import { EVENT, ParamContext } from '../utils/utils';
  *
  * @type {import("./preact-signal-router.d.ts").useSearchParams}
  */
-export const useSearchParams = () => {
+export function useSearchParams() {
 	const setSearchParams = (param) => {
 		const newUrl = `${locationSignal.value}?${param}`;
 		window.history.pushState({}, '', newUrl);
@@ -18,43 +18,41 @@ export const useSearchParams = () => {
 	};
 
 	return [searchParamsSignal, setSearchParams];
-};
+}
 
 /**
  *
- * @returns {[{value:String},(value:String)=>void]}
- * [location object, function to change location]
+ * @type {import("./preact-signal-router.d.ts").useLocation}
  */
-export const useLocation = () => {
+
+export function useLocation() {
 	const setLocation = (to) => {
 		window.history.pushState({}, '', to);
 		document.dispatchEvent(new Event(EVENT.changeLocation));
 	};
 
 	return [locationSignal, setLocation];
-};
+}
 
 /**
  *
- * @param {String} path
- *
- * @returns {[match:boolean,params:{key:value}]}
+ *@type {import("./preact-signal-router.d.ts").useRoute}
  */
-export const useRoute = (path) => {
+export function useRoute(path) {
 	const check = match(path);
 	const checkResult = check(locationSignal);
 
 	if (!checkResult) return [false, null];
 
 	return [true, checkResult.params];
-};
+}
 
 /**
  *
- * @returns {{params}} dynamic route param
+ * @type {import("./preact-signal-router.d.ts").useParams}
  */
-export const useParams = () => {
+export function useParams() {
 	const { params } = useContext(ParamContext);
 
-	return params;
-};
+	return { params };
+}
